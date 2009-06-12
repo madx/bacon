@@ -5,6 +5,13 @@ require 'optparse'
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '../lib/')
 module Bacon; end
 
+if File.exist?(local_rc = File.join(Dir.pwd, '.baconrc'))
+  ARGV.unshift(*File.read(local_rc).split)
+end
+if File.exist?(global_rc = File.expand_path('~/.baconrc'))
+  ARGV.unshift(*File.read(global_rc).split)
+end
+
 automatic = false
 output = 'SpecDoxOutput'
 
