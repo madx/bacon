@@ -5,11 +5,8 @@ require 'optparse'
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '../lib/')
 module Bacon; end
 
-if File.exist?(local_rc = File.join(Dir.pwd, '.baconrc'))
-  ARGV.unshift(*File.read(local_rc).split)
-end
-if File.exist?(global_rc = File.expand_path('~/.baconrc'))
-  ARGV.unshift(*File.read(global_rc).split)
+[File.join(Dir.pwd, '.baconrc'), File.expand_path('~/.baconrc')].each do |rc|
+  ARGV.unshift(*File.read(rc).split) if File.exist? rc
 end
 
 automatic = false
